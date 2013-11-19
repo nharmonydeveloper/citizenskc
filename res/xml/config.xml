@@ -53,9 +53,9 @@
     <feature name="Geolocation">
       <param name="android-package" value="org.apache.cordova.GeoBroker"/>
     </feature>
-    <feature name="Device">
+<!--     <feature name="Device">
       <param name="android-package" value="org.apache.cordova.Device"/>
-    </feature>
+    </feature> -->
 <!--     <feature name="Accelerometer">
       <param name="android-package" value="org.apache.cordova.AccelListener"/>
     </feature>
@@ -98,9 +98,9 @@
  <!--    <feature name="Echo">
       <param name="android-package" value="org.apache.cordova.Echo"/>
     </feature> -->
-    <feature name="Globalization">
+<!--     <feature name="Globalization">
       <param name="android-package" value="org.apache.cordova.Globalization"/>
-    </feature>
+    </feature> -->
     <feature name="InAppBrowser">
       <param name="android-package" value="org.apache.cordova.InAppBrowser"/>
     </feature>
