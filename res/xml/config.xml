@@ -56,7 +56,7 @@
     <feature name="Device">
       <param name="android-package" value="org.apache.cordova.Device"/>
     </feature>
-    <feature name="Accelerometer">
+<!--     <feature name="Accelerometer">
       <param name="android-package" value="org.apache.cordova.AccelListener"/>
     </feature>
     <feature name="Compass">
@@ -91,13 +91,13 @@
     </feature>
     <feature name="Battery">
       <param name="android-package" value="org.apache.cordova.BatteryListener"/>
-    </feature>
+    </feature> -->
     <feature name="SplashScreen">
       <param name="android-package" value="org.apache.cordova.SplashScreen"/>
     </feature>
-    <feature name="Echo">
+ <!--    <feature name="Echo">
       <param name="android-package" value="org.apache.cordova.Echo"/>
-    </feature>
+    </feature> -->
     <feature name="Globalization">
       <param name="android-package" value="org.apache.cordova.Globalization"/>
     </feature>

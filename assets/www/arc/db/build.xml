@@ -1,4 +1,0 @@
-<xml version="1.0" encoding="UTF-8"?>
-<statments>
-    <statement>CREATE TABLE IF NOT EXISTS Test(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, data TEXT)</statement>    
-</statments>
