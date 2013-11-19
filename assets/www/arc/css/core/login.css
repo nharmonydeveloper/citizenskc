@@ -1,0 +1,52 @@
+div.loginBox{
+	text-align: center;
+	width: 100%;
+	/*padding: 35px;	*/
+	display: none;
+}
+
+div.loginBox input[type="text"], div.loginBox input[type="password"], input.loginButton{
+	width: 100%;
+	/*width: 300px;
+	padding: 8px;
+	font-size: 17px;
+	margin-bottom: 12px;*/
+}
+
+div.loginBox a {
+	color: rgb(119, 120, 120) !important;
+	font-size: 15px;	
+}
+
+table.loginTextHolder{
+	margin: 0 auto;
+	text-align: left;
+	width: 100%;
+}
+
+input.loginButton{
+/*	width: 318px;*/
+	font-size: 17px;
+	margin: 0 auto;
+	margin-top: 3px;
+	margin-bottom: 22px;
+}
+
+a.loginLink{
+	margin-right: 15px;
+	margin-left: 15px;
+}
+
+div.logoHolder{	
+	margin: 0 auto;
+}
+
+p.logoText{
+	font-size: 29pt;
+	margin-top:10px;
+}
+
+div.loginError{
+	background-color: red;
+	display: none;
+}

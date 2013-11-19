@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Cordova</title>
+<script type="text/javascript" charset="utf-8" src="js/jquery/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/core/cordova.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/core/database.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/core/connection.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/jquery/parsley.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="css/core/core.css" />
+<link rel="stylesheet" type="text/css" href="css/core/login.css" />
+<link rel="stylesheet" type="text/css" href="css/jquery/parsley.css" />
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+	document.addEventListener('deviceready', onDeviceReady, false);		
+});
+
+function onDeviceReady()
+{
+	db_init('sbpt', 'db/build.xml');
+	
+	$('.loginBox input').focus(inputFocus);
+	$('#login').parsley({
+		listeners: {
+			onFormSubmit: loginSubmit
+		}
+	});	
+	
+	checkLogin();
+}
+
+function checkLogin()
+{
+	db_query('SELECT * FROM Settings', {
+		success: function(tx, results){
+			if(results.rows.length == 1 && results.rows.item(0).UserId != 0)
+			{
+				window.localStorage.setItem('UserId', results.rows.item(0).UserId); 
+				loginRedirect();
+			}
+			else
+			{
+				$('.loginBox').show();
+			}
+		}
+	});
+}
+
+function inputFocus() 
+{
+	if($('.loginError').is(':visible'))
+	{
+		$('.loginError').show().css('opacity', 1).slideUp('slow').animate(
+			{ opacity: 0 },
+			{ queue: false, duration: 'slow' }
+		);
+	}
+}
+
+function loginSubmit(valid, event, frm)
+{
+	if(valid)
+	{	
+		$.ajax('serverResponse/login_success.json', {
+			dataType: 'json',
+			success: function(response) {
+				if(response.status == 'SUCCESS')
+				{
+					db_query('SELECT * FROM Settings', {
+						success: function(tx, results){
+							domain = $('#Domain').val();
+							username = $('#Username').val();
+							password = $('#Password').val();
+							userId = response.userId
+							
+							window.localStorage.setItem('UserId', response.userId);	
+							
+							if(results.rows.length == 1)
+							{
+								db_query('UPDATE Settings SET Domain="' + domain + '", Username="' + username + '", Password="' + password + '", UserId="' + userId + '"', {
+									success: loginRedirect
+								});
+							}
+							else
+							{
+								db_query('INSERT INTO Settings (Domain, Username, Password, UserId) Values ("' + domain + '", "' + username + '", "' + password + '", "' + userId + '")', {
+									success: loginRedirect
+								}); 
+							}								        			
+						}
+					});
+				}
+				else if(response.status == 'ERROR')
+				{
+					if($('.loginError').is(':not(:visible)'))
+					{
+						$('.loginError').hide().css('opacity', 0).slideDown('slow').animate(
+					    	{ opacity: 1 },
+					    	{ queue: false, duration: 'slow' }
+					    );
+					}
+				}
+			}
+		});
+	}
+	
+	event.preventDefault();
+	return false;
+}
+
+function loginRedirect()
+{
+	window.location.href = 'deliveries_list.html';
+}
+
+</script>
+</head>
+<body class="main">
+<div class="loginBox">
+	<div class="logoHolder">
+		<p class="logoText">sb purchase tracker</p>
+	</div>	
+	<form id="login" novalidate>
+		<div class="loginError">
+			<p>Invalid Login</p>
+		</div>
+		<table class="loginTextHolder">
+			<tbody>
+				<tr>
+					<td><input name="Domain" placeholder="Domain" type="url" id="Domain" required></td>
+				</tr>
+				<tr>
+					<td><input name="Username" placeholder="Username" type="email" id="Username" required></td>
+				</tr>
+				<tr>
+					<td><input name="Password" placeholder="Password" type="password" id="Password" required></td>
+				</tr>
+			</tbody>
+		</table>
+		<input type="submit" class="loginButton" value="Login">
+	</form>
+	
+	<p><a href="deliveries_list.html">Deliveries List</a></p>	
+</div>
+</body>
+</html>
